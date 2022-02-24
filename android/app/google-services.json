@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1006498402876",
+    "project_id": "westsidesneakerstore",
+    "storage_bucket": "westsidesneakerstore.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006498402876:android:bd8483080d880e7c4ca939",
+        "android_client_info": {
+          "package_name": "com.example.westside_sneaker_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1006498402876-g8sdj84bp4qlgna6qh3vkuoujibr1kad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrXpbNUs8rRkovfrcjBLJtuLL_yF88H3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006498402876-g8sdj84bp4qlgna6qh3vkuoujibr1kad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
