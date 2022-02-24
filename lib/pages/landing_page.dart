@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:westside_sneaker_store/pages/home_page.dart';
+import 'package:westside_sneaker_store/pages/login_page.dart';
 import 'package:westside_sneaker_store/values/text_style.dart';
 
 class LandingPage extends StatelessWidget {
@@ -21,15 +24,51 @@ class LandingPage extends StatelessWidget {
             ),
           );
         }
+
         //Firebase app is running - successful connect
         if (snapshot.connectionState == ConnectionState.done) {
-          return Scaffold(
-            body: Center(
-              child: Text(
-                'Connecting',
-                style: appStyles.regularHeading,
-              ),
-            ),
+          //Streambuider can check the login state live
+          return StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, streamSnapshot) {
+              //if streamSnapshot has error
+              if (streamSnapshot.hasError) {
+                return Scaffold(
+                  body: Center(
+                    child: Text(
+                      'Error: ${streamSnapshot.error}',
+                      style: appStyles.regularHeading,
+                    ),
+                  ),
+                );
+              }
+
+              //Connect state active - user logined this app
+              if (streamSnapshot.connectionState == ConnectionState.active) {
+                //get user
+                FirebaseAuth.instance.authStateChanges().listen((User? user) {
+                  if (user == null) {
+                    // print('User is currently signed out!');
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  } else {
+                    // print('User is signed in!');
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  }
+                });
+              }
+
+              //Checking the auth state - Loading
+              return Scaffold(
+                body: Center(
+                  child: Text(
+                    'Checking Authentication...',
+                    style: appStyles.regularHeading,
+                  ),
+                ),
+              );
+            },
           );
         }
         //Connecting to Firebase - loading
