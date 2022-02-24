@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 class appStyles {
   static TextStyle regularHeading = TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black);
+  static TextStyle boldHeading = TextStyle(
+      fontSize: 25.0, fontWeight: FontWeight.w600, color: Colors.black);
+  static TextStyle darkText = TextStyle(
+      fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
   // static TextStyle h2 =
   //     GoogleFonts.roboto(fontSize: 67.77, color: Colors.white);
   // static TextStyle h3 =

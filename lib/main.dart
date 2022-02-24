@@ -11,6 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //Xoa banner debug phia tren goc phai man hinh
+      debugShowCheckedModeBanner: false,
       home: LandingPage(),
     );
   }

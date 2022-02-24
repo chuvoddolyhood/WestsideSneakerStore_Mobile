@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:westside_sneaker_store/pages/register_page.dart';
 import 'package:westside_sneaker_store/values/text_style.dart';
 import 'package:westside_sneaker_store/widgets/button_widget.dart';
-import 'package:westside_sneaker_store/widgets/input_widget.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+import '../widgets/input_widget.dart';
+
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               padding: EdgeInsets.only(top: 150.0),
               child: Text(
-                'Welcome user,\n Login to your account',
+                'Create new account',
                 textAlign: TextAlign.center,
                 style: appStyles.boldHeading,
               ),
@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                 InputWidget(hintText: 'Email'),
                 InputWidget(hintText: 'Password'),
                 appButton(
-                  label: 'Login',
+                  label: 'Sign in',
                   onTap: () {
                     print('abc');
                   },
@@ -43,17 +43,18 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: appButton(
-                  label: 'Create New Account',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterPage()));
-                  },
-                  outlineBtn: true,
-                ))
+              padding: const EdgeInsets.only(bottom: 30.0),
+              child: RawMaterialButton(
+                fillColor: Colors.white,
+                elevation: 0,
+                shape: CircleBorder(),
+                onPressed: () {
+                  //Xoa context cua landing page
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back),
+              ),
+            )
           ],
         ),
       ),
