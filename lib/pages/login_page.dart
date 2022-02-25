@@ -12,6 +12,10 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+//Get value from textfield
+final email_controller_login = TextEditingController();
+final password_controller_login = TextEditingController();
+
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
@@ -35,10 +39,12 @@ class _LoginPageState extends State<LoginPage> {
                 InputWidget(
                   hintText: 'Email',
                   isPasswordField: false,
+                  valueText: email_controller_login,
                 ),
                 InputWidget(
                   hintText: 'Password',
                   isPasswordField: true,
+                  valueText: password_controller_login,
                 ),
                 appButton(
                   label: 'Login',

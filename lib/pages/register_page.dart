@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:westside_sneaker_store/values/text_style.dart';
 import 'package:westside_sneaker_store/widgets/button_widget.dart';
@@ -13,7 +14,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   //Build alert dialog to show error
-  Future<void> alertDialogBuider() async {
+  Future<void> alertDialogBuider(String error) async {
     return showDialog(
         barrierDismissible: false,
         context: context,
@@ -21,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
           return AlertDialog(
             title: Text('Error'),
             content: Container(
-              child: Text('Description'),
+              child: Text(error),
             ),
             actions: [
               ElevatedButton(
@@ -37,9 +38,64 @@ class _RegisterPageState extends State<RegisterPage> {
   //default state loading button
   bool showLoading = false;
 
-  //Form input field value
-  String email_register = "";
-  String password_register = "";
+  //Get value from textfield
+  final email_controller_register = TextEditingController();
+  final password_controller_register = TextEditingController();
+
+  // Create user account
+  Future<String?> createUser() async {
+    // try {
+    //   UserCredential userCredential = await FirebaseAuth.instance
+    //       .createUserWithEmailAndPassword(
+    //           email: "barry.allen@example.com",
+    //           password: "SuperSecretPassword!");
+    // } on FirebaseAuthException catch (e) {
+    //   if (e.code == 'weak-password') {
+    //     print('The password provided is too weak.');
+    //   } else if (e.code == 'email-already-in-use') {
+    //     print('The account already exists for that email.');
+    //   }
+    // } catch (e) {
+    //   print(e);
+    // }
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email_controller_register.text,
+          password: password_controller_register.text);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        return 'The account already exists for that email.';
+      }
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  void submitForm() async {
+    //Set form loading state
+    setState(() {
+      showLoading = true;
+    });
+
+    //Create account
+    String? createFeedbackAccount = await createUser();
+
+    //If string isn't null => error
+    if (createFeedbackAccount != null) {
+      alertDialogBuider(createFeedbackAccount);
+
+      //Cancel show loading form
+      setState(() {
+        showLoading = false;
+      });
+    } else {
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,16 +119,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 InputWidget(
                   hintText: 'Email',
                   isPasswordField: false,
+                  valueText: email_controller_register,
                 ),
                 InputWidget(
                   hintText: 'Password',
                   isPasswordField: true,
+                  valueText: password_controller_register,
                 ),
                 appButton(
                   label: 'Sign in',
                   onTap: () {
                     setState(() {
-                      showLoading = true;
+                      submitForm();
                     });
                   },
                   outlineBtn: false,
