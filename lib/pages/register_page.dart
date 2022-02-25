@@ -12,6 +12,35 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  //Build alert dialog to show error
+  Future<void> alertDialogBuider() async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Container(
+              child: Text('Description'),
+            ),
+            actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Close'))
+            ],
+          );
+        });
+  }
+
+  //default state loading button
+  bool showLoading = false;
+
+  //Form input field value
+  String email_register = "";
+  String password_register = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +60,23 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             Column(
               children: [
-                InputWidget(hintText: 'Email'),
-                InputWidget(hintText: 'Password'),
+                InputWidget(
+                  hintText: 'Email',
+                  isPasswordField: false,
+                ),
+                InputWidget(
+                  hintText: 'Password',
+                  isPasswordField: true,
+                ),
                 appButton(
                   label: 'Sign in',
                   onTap: () {
-                    print('abc');
+                    setState(() {
+                      showLoading = true;
+                    });
                   },
                   outlineBtn: false,
+                  isLoading: showLoading,
                 )
               ],
             ),

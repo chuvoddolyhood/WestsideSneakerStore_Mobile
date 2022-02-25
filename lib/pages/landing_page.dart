@@ -59,11 +59,11 @@ class LandingPage extends StatelessWidget {
                 });
               }
 
-              //Checking the auth state - Loading
+              //Checking the auth state - Loading - Checking Authentication...
               return Scaffold(
                 body: Center(
                   child: Text(
-                    'Checking Authentication...',
+                    'Loading...',
                     style: appStyles.regularHeading,
                   ),
                 ),
@@ -71,11 +71,11 @@ class LandingPage extends StatelessWidget {
             },
           );
         }
-        //Connecting to Firebase - loading
+        //Connecting to Firebase - loading - Initialization App
         return Scaffold(
           body: Center(
             child: Text(
-              'Initialization App...',
+              'Loading...',
               style: appStyles.regularHeading,
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:westside_sneaker_store/pages/register_page.dart';
 import 'package:westside_sneaker_store/values/text_style.dart';
@@ -31,14 +32,21 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Column(
               children: [
-                InputWidget(hintText: 'Email'),
-                InputWidget(hintText: 'Password'),
+                InputWidget(
+                  hintText: 'Email',
+                  isPasswordField: false,
+                ),
+                InputWidget(
+                  hintText: 'Password',
+                  isPasswordField: true,
+                ),
                 appButton(
                   label: 'Login',
                   onTap: () {
                     print('abc');
                   },
                   outlineBtn: false,
+                  isLoading: false,
                 )
               ],
             ),
@@ -53,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context) => RegisterPage()));
                   },
                   outlineBtn: true,
+                  isLoading: false,
                 ))
           ],
         ),
