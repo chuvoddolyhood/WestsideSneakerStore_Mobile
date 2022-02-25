@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigation_Widget extends StatefulWidget {
+  final int selectedTab;
+  final Function(int) tabPressed;
+  const BottomNavigation_Widget(
+      {Key? key, required this.selectedTab, required this.tabPressed})
+      : super(key: key);
+
   @override
   State<BottomNavigation_Widget> createState() =>
       _BottomNavigation_WidgetState();
@@ -11,6 +17,7 @@ class _BottomNavigation_WidgetState extends State<BottomNavigation_Widget> {
 
   @override
   Widget build(BuildContext context) {
+    selectTab = widget.selectedTab;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
@@ -30,27 +37,30 @@ class _BottomNavigation_WidgetState extends State<BottomNavigation_Widget> {
             titleIcon: "home",
             isSelected: (selectTab == 0) ? true : false,
             onTap: () {
-              setState(() {
-                selectTab = 0;
-              });
+              widget.tabPressed(0);
+              // setState(() {
+              //   selectTab = 0;
+              // });
             },
           ),
           Button_Nav_Widget(
             titleIcon: "search",
             isSelected: (selectTab == 1) ? true : false,
             onTap: () {
-              setState(() {
-                selectTab = 1;
-              });
+              widget.tabPressed(1);
+              // setState(() {
+              //   selectTab = 1;
+              // });
             },
           ),
           Button_Nav_Widget(
             titleIcon: "favorite",
             isSelected: (selectTab == 2) ? true : false,
             onTap: () {
-              setState(() {
-                selectTab = 2;
-              });
+              widget.tabPressed(2);
+              // setState(() {
+              //   selectTab = 2;
+              // });
             },
           ),
           Button_Nav_Widget(

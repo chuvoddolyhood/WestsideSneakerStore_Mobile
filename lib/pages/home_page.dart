@@ -10,14 +10,62 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late PageController _tabPageController;
+  late int _selectedTab = 0; //chon icon tren bottom navigation
+
+  @override
+  void initState() {
+    _tabPageController = PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabPageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Center(child: Text('HomePage')),
-          BottomNavigation_Widget(),
+          Expanded(
+            child: PageView(
+              controller: _tabPageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedTab = index;
+                });
+              },
+              children: [
+                Container(
+                  child: Center(
+                    child: Text('Home Page'),
+                  ),
+                ),
+                Container(
+                  child: Center(
+                    child: Text('Search Page'),
+                  ),
+                ),
+                Container(
+                  child: Center(
+                    child: Text('Save page'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          BottomNavigation_Widget(
+            selectedTab: _selectedTab,
+            tabPressed: (index) {
+              _tabPageController.animateToPage(index,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeOutCubic);
+            },
+          ),
         ],
       ),
     );
