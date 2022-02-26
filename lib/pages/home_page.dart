@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:westside_sneaker_store/tab/home_tab.dart';
+import 'package:westside_sneaker_store/tab/save_tab.dart';
+import 'package:westside_sneaker_store/tab/search_tab.dart';
 import 'package:westside_sneaker_store/widgets/bottom_nav_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,21 +43,9 @@ class _HomePageState extends State<HomePage> {
                 });
               },
               children: [
-                Container(
-                  child: Center(
-                    child: Text('Home Page'),
-                  ),
-                ),
-                Container(
-                  child: Center(
-                    child: Text('Search Page'),
-                  ),
-                ),
-                Container(
-                  child: Center(
-                    child: Text('Save page'),
-                  ),
-                ),
+                HomeTab(),
+                SearchTab(),
+                SaveTab(),
               ],
             ),
           ),
