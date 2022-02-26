@@ -8,9 +8,7 @@ class SaveTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Center(
-          child: Text('home tab'),
-        ),
+        Center(child: Text('save tab')),
         ActionBar_Widget(
           title: "Saved",
           hasBack: false,
