@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:westside_sneaker_store/values/text_style.dart';
+import 'package:westside_sneaker_store/widgets/Size_Widget.dart';
 import 'package:westside_sneaker_store/widgets/actionBar_widget.dart';
 import 'package:westside_sneaker_store/widgets/imageSwipe_Widget.dart';
 
@@ -43,6 +44,9 @@ class _ProductPageState extends State<ProductPage> {
                 //List of Image
                 List imageList = documentData['images'];
 
+                //List of Size
+                List sizeList = documentData['size'];
+
                 return ListView(
                   padding: EdgeInsets.all(0),
                   children: [
@@ -78,6 +82,43 @@ class _ProductPageState extends State<ProductPage> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 24.0),
                       child: Text('Select size', style: appStyles.darkText),
+                    ),
+                    //Cách gom nhóm layout padding cho giao dien
+                    Size_Widget(sizeList: sizeList),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Container(
+                              width: 70,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 231, 237, 240),
+                                  borderRadius: BorderRadius.circular(15)),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.favorite,
+                                size: 25,
+                              )),
+                        ),
+                        Expanded(
+                          child: Container(
+                            // width: double.infinity,
+                            margin: EdgeInsets.only(right: 24),
+                            alignment: Alignment.center,
+                            height: 70,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Text(
+                              'Add to cart',
+                              style: appStyles.darkText
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ),
+                        )
+                      ],
                     )
                   ],
                 );
