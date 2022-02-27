@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:westside_sneaker_store/values/text_style.dart';
 
@@ -15,6 +17,11 @@ class ActionBar_Widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CollectionReference userRef =
+        FirebaseFirestore.instance.collection('User');
+
+    User? user = FirebaseAuth.instance.currentUser;
+
     return Container(
       decoration: BoxDecoration(
           gradient: hasBackground
@@ -42,19 +49,30 @@ class ActionBar_Widget extends StatelessWidget {
             style: appStyles.boldHeading,
           ),
           Container(
-            decoration: BoxDecoration(
-                color: Colors.black, borderRadius: BorderRadius.circular(8.0)),
-            width: 42.0,
-            height: 42.0,
-            alignment: Alignment.center,
-            child: Text(
-              '0',
-              style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white),
-            ),
-          ),
+              decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(8.0)),
+              width: 42.0,
+              height: 42.0,
+              alignment: Alignment.center,
+              child: StreamBuilder<dynamic>(
+                //Dem so luong hang hoa cua User
+                stream: userRef.doc(user!.uid).collection('Cart').snapshots(),
+                builder: (context, snapshot) {
+                  int totalProduct = 0;
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    List documentData = snapshot.data.docs;
+                    totalProduct = documentData.length;
+                  }
+                  return Text(
+                    totalProduct.toString(),
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
+                  );
+                },
+              )),
         ],
       ),
     );

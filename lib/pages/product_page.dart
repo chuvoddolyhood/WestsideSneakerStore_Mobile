@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:westside_sneaker_store/values/text_style.dart';
 import 'package:westside_sneaker_store/widgets/Size_Widget.dart';
@@ -17,6 +18,23 @@ final CollectionReference initialization =
     FirebaseFirestore.instance.collection('Product');
 
 class _ProductPageState extends State<ProductPage> {
+  final CollectionReference userRef = FirebaseFirestore.instance
+      .collection('User'); //User -> UserID(document) -> Cart -> productID
+
+  //Lay user hien tai dang dang nhap
+  User? user = FirebaseAuth.instance.currentUser;
+
+  Future addCart() {
+    return userRef
+        .doc(user!.uid)
+        .collection('Cart')
+        .doc(widget.id_product)
+        .set({"size": 1});
+  }
+
+  final SnackBar snackBar =
+      SnackBar(content: Text("Product added to the cart"));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,18 +121,24 @@ class _ProductPageState extends State<ProductPage> {
                               )),
                         ),
                         Expanded(
-                          child: Container(
-                            // width: double.infinity,
-                            margin: EdgeInsets.only(right: 24),
-                            alignment: Alignment.center,
-                            height: 70,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Text(
-                              'Add to cart',
-                              style: appStyles.darkText
-                                  .copyWith(color: Colors.white),
+                          child: InkWell(
+                            onTap: () async {
+                              await addCart();
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            },
+                            child: Container(
+                              // width: double.infinity,
+                              margin: EdgeInsets.only(right: 24),
+                              alignment: Alignment.center,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Text(
+                                'Add to cart',
+                                style: appStyles.darkText
+                                    .copyWith(color: Colors.white),
+                              ),
                             ),
                           ),
                         )
