@@ -3,7 +3,10 @@ import 'package:westside_sneaker_store/values/text_style.dart';
 
 class Size_Widget extends StatefulWidget {
   final List sizeList;
-  const Size_Widget({Key? key, required this.sizeList}) : super(key: key);
+  final Function(String) onSelected;
+  const Size_Widget(
+      {Key? key, required this.sizeList, required this.onSelected})
+      : super(key: key);
 
   @override
   _Size_WidgetState createState() => _Size_WidgetState();
@@ -20,6 +23,7 @@ class _Size_WidgetState extends State<Size_Widget> {
           for (var i = 0; i < widget.sizeList.length; i++)
             InkWell(
               onTap: () {
+                widget.onSelected("${widget.sizeList[i]}");
                 setState(() {
                   selectSize = i;
                 });

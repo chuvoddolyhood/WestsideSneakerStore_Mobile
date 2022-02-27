@@ -29,11 +29,13 @@ class _ProductPageState extends State<ProductPage> {
         .doc(user!.uid)
         .collection('Cart')
         .doc(widget.id_product)
-        .set({"size": 1});
+        .set({"size": selectedProductSize});
   }
 
   final SnackBar snackBar =
       SnackBar(content: Text("Product added to the cart"));
+
+  String selectedProductSize = "0";
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +66,9 @@ class _ProductPageState extends State<ProductPage> {
 
                 //List of Size
                 List sizeList = documentData['size'];
+
+                //Set initial size
+                selectedProductSize = sizeList[0];
 
                 return ListView(
                   padding: EdgeInsets.all(0),
@@ -102,7 +107,12 @@ class _ProductPageState extends State<ProductPage> {
                       child: Text('Select size', style: appStyles.darkText),
                     ),
                     //Cách gom nhóm layout padding cho giao dien
-                    Size_Widget(sizeList: sizeList),
+                    Size_Widget(
+                      sizeList: sizeList,
+                      onSelected: (size) {
+                        selectedProductSize = size;
+                      },
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
