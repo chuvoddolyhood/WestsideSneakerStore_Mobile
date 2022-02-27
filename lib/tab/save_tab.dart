@@ -12,6 +12,7 @@ class SaveTab extends StatelessWidget {
         ActionBar_Widget(
           title: "Saved",
           hasBack: false,
+          hasBackground: true,
         )
       ],
     );
